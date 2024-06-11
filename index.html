@@ -8,10 +8,25 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+			
+			background-image: url('https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/33553.jpg?raw=true'); /* Reemplaza con la URL de tu imagen */
+            background-size: 100%; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: top; /* Centra la imagen de fondo */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
         }
+				
+			#header {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+
+			#header img {
+				max-width: 100%;
+				height: auto;
+			}	
 			#searchBoxContainer {
 				position: fixed;
-				top: 2px;
+				top: 160px;
 				left: 20px;
 				right: 20px; /* Ajustar a ambos lados */
 				width: calc(100% - 40px); /* Ajustar al ancho disponible */
@@ -92,8 +107,10 @@
     </style>
 </head>
 <body>
- 
-	 <h1>Listado de Karaoke</h1>
+  <div id="header">
+        <img src="https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/logo%20karaoke.jpg?raw=true" alt="Cabecera del sitio"> <!-- Reemplaza con la URL de tu imagen -->
+    </div>
+
 	<div id="searchBoxContainer">
 		<div>
 			<input type="text" id="searchBox" placeholder="Buscar artista o canción">
