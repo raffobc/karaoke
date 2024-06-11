@@ -3,125 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos de Canciones para Karaoke</title>
+    <title>Listado de Karaoke</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #f0f0f0;
         }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background-color: white;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
+			#searchBoxContainer {
+				position: fixed;
+				top: 2px;
+				left: 20px;
+				right: 20px; /* Ajustar a ambos lados */
+				width: calc(100% - 40px); /* Ajustar al ancho disponible */
+				background-color: #40E0D0;
+				padding: 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				z-index: 1000;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			#searchBoxContainer > div {
+				display: flex;
+				align-items: center;
+				flex-grow: 1; /* Permitir que los hijos crezcan */
+				margin-right: 10px; /* Espacio entre elementos */
+
+			}
+
+			#searchBox, #nameInput {
+				width: 100%;
+				padding: 10px;
+				font-size: 16px;
+				background-color: black;
+				border: none;
+				color: white;
+				flex-grow: 1; /* Permitir que el elemento crezca */
+				margin-right: 10px; /* Espacio entre elementos */
+			}
+
+			#submitBtn {
+				padding: 10px 20px;
+				font-size: 16px;
+				background-color: #4CAF50;
+				color: white;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+	            flex-shrink: 0; /* Evitar que el botón se reduzca */
+
+			}
+
+			#submitBtn:disabled {
+				background-color: #cccccc;
+				cursor: not-allowed;
+			}
+
+			#namesList {
+				list-style-type: none;
+				padding: 0;
+				margin-top: 65px;
+			}
+
+			#namesList li {
+				padding: 8px;
+				background: #f9f9f9;
+				margin-bottom: 5px;
+				border-radius: 4px;
+				display: flex;
+				justify-content: space-between;
+				cursor: pointer;
+			}
+
+			#namesList li.selected {
+				background-color: #ADD8E6;
+			}
+
+			#namesList li.hidden {
+				display: none;
+			}
+
+			#namesList li div {
+				width: 30%;
+			}
+
+
     </style>
 </head>
 <body>
-    <h1>Pedidos de Canciones para Karaoke</h1>
-    <form id="songRequestForm">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="song">Canción:</label>
-        <input list="songList" id="song" name="song" required>
-        <datalist id="songList"></datalist>
-        
-        <label for="artist">Artista:</label>
-        <input type="text" id="artist" name="artist" required>
-        
-        <button type="submit">Enviar Pedido</button>
-    </form>
-    
-    <h2>Lista de Pedidos</h2>
-    <ul id="requestList"></ul>
-
+ 
+	 <h1>Listado de Karaoke</h1>
+	<div id="searchBoxContainer">
+		<div>
+			<input type="text" id="searchBox" placeholder="Buscar artista o canción">
+		</div>
+		<div>
+			<input type="text" id="nameInput" placeholder="Nombre">
+		</div>
+		<div>
+			<button id="submitBtn" disabled>Enviar Selección</button>
+		</div>
+	</div>
+	<ul id="namesList"></ul>
+    <!-- Incluir Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('songRequestForm');
-            const requestList = document.getElementById('requestList');
-            const songList = document.getElementById('songList');
-            
-            // Reemplaza 'YOUR_API_KEY' y 'YOUR_SPREADSHEET_ID' con tus valores.
-            const apiKey = 'AIzaSyC12jixhKe6UrOdqsKz5SVgOkR5tBHny4E';
-            const spreadsheetId = '1bqlfloLYVMcdoFybgZDjxt9ZZtmUTaJhUneCDJ4rQy0';
-            const range = 'Sheet1!A2:B4000'; // Ajusta esto según tu hoja de cálculo.
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLMQBTRT-E7Ix1PtfG9REYJX-_Zn7o0b8",
+            authDomain: "karaokedelivery-45729.firebaseapp.com",
+            projectId: "karaokedelivery-45729",
+            storageBucket: "karaokedelivery-45729.appspot.com",
+            messagingSenderId: "698577896474",
+            appId: "1:698577896474:web:d9226e1a0ff11e9f10fda3"
+        };
 
-            // Función para cargar canciones desde Google Sheets.
-            function loadSongs() {
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        const rows = data.values;
-                        if (rows.length > 0) {
-                            rows.forEach(row => {
-                                const option = document.createElement('option');
-                                option.value = row[0]; // Nombre de la canción.
-                                option.textContent = `${row[0]} - ${row[1]}`; // Nombre de la canción - Artista.
-                                songList.appendChild(option);
-                            });
-                        }
-                    })
-                    .catch(error => console.error('Error al cargar las canciones:', error));
-            }
+         // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
 
-            // Llama a la función para cargar las canciones.
-            loadSongs();
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.getElementById('searchBox');
+            const nameInput = document.getElementById('nameInput'); // Nuevo campo de entrada de nombre
+            const namesList = document.getElementById('namesList');
+            const submitBtn = document.getElementById('submitBtn');
+            const apiKey = 'AIzaSyC12jixhKe6UrOdqsKz5SVgOkR5tBHny4E'; // Reemplaza con tu API key
+            const spreadsheetId = '1bqlfloLYVMcdoFybgZDjxt9ZZtmUTaJhUneCDJ4rQy0'; // Reemplaza con tu ID de la hoja
+            const range = 'A2:B10000'; // Rango donde están los datos
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+            let selectedRow = null;
+            let contador = 1; // Inicializar contador
 
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const song = document.getElementById('song').value;
-                const artist = document.getElementById('artist').value;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const rows = data.values;
+                    rows.forEach(row => {
+                        const li = document.createElement('li');
+                        const nameDiv = document.createElement('div');
+                        const surnameDiv = document.createElement('div');
 
-                const listItem = document.createElement('li');
-                listItem.textContent = `${name} pidió la canción "${song}" de ${artist}`;
+                        nameDiv.textContent = row[0]; // Columna A
+                        surnameDiv.textContent = row[1]; // Columna B
 
-                requestList.appendChild(listItem);
+                        li.appendChild(nameDiv);
+                        li.appendChild(surnameDiv);
 
-                form.reset();
+                        li.addEventListener('click', function() {
+                            // Desmarcar todos los elementos
+                            const items = namesList.getElementsByTagName('li');
+                            for (let i = 0; i < items.length; i++) {
+                                items[i].classList.remove('selected');
+                            }
+                            // Marcar el elemento seleccionado
+                            li.classList.add('selected');
+                            selectedRow = {
+                                name: row[0],
+                                surname: row[1],
+                                order: contador // Agregar el número de orden
+                            };
+                            contador++; // Incrementar el contador
+                            submitBtn.disabled = false; // Habilitar el botón de enviar selección
+                        });
+
+                        namesList.appendChild(li);
+                    });
+                });
+
+            searchBox.addEventListener('input', function() {
+                const filter = searchBox.value.toLowerCase();
+                const names = namesList.getElementsByTagName('li');
+                for (let i = 0; i < names.length; i++) {
+                    const name = names[i].textContent.toLowerCase();
+                    if (name.includes(filter)) {
+                        names[i].classList.remove('hidden');
+                    } else {
+                        names[i].classList.add('hidden');
+                    }
+                }
             });
+
+            /*submitBtn.addEventListener('click', function() {
+                if (selectedRow) {
+                    db.collection('songs').add(selectedRow)
+                        .then(() => {
+                            alert('Selección enviada correctamente');
+                            submitBtn.disabled = true;
+                        })
+                        .catch(error => {
+                            console.error('Error al guardar la selección:', error);
+                            alert('Error al enviar la selección');
+                        });
+                }
+            });*/
+			submitBtn.addEventListener('click', function() {
+				const newName = nameInput.value.trim(); // Obtener el nombre del nuevo input
+				if (selectedRow !== null && newName !== '') {
+					const selection = {
+						name: newName,
+						artist: selectedRow.name, // Campo para el nombre del artista
+						song: selectedRow.surname, // Campo para el nombre de la canción
+						order: contador // Agregar el número de orden
+					};
+					//contador++; // Incrementar el contador
+
+					db.collection('songs').add(selection)
+						.then(() => {
+							alert('Selección enviada correctamente');
+							submitBtn.disabled = true;
+						})
+						.catch(error => {
+							console.error('Error al guardar la selección:', error);
+							alert('Error al enviar la selección');
+						});
+				} else {
+					alert('Por favor ingrese un nombre antes de enviar la selección.');
+				}
+			});
+
+
+			
+			
         });
     </script>
 </body>
