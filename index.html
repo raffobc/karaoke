@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
  		margin: 0; /* Asegura que no haya margen alrededor de la página */
-            padding-top: 200px; /* Deja espacio para la cabecera */	
+            padding-top: 100px; /* Deja espacio para la cabecera */	
 	// background-image: url('https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/33553.jpg?raw=true');  /* Reemplaza con la URL de tu imagen */
         //    background-size: 100%; /* Ajusta la imagen para que cubra todo el fondo */
 	//  background-position: top; /* Centra la imagen de fondo */
@@ -34,25 +34,26 @@
 
 			}	
 			#searchBoxContainer {
-				position: fixed;
-				top: 160px;
-				left: 20px;
-				right: 20px; /* Ajustar a ambos lados */
-				width: calc(100% - 40px); /* Ajustar al ancho disponible */
-				background-color: #40E0D0;
+			//	position: fixed;
+			//	top: 160px;
+			//	left: 20px;
+			//	right: 20px; /* Ajustar a ambos lados */
+			//	width: calc(100% - 40px); /* Ajustar al ancho disponible */
+			//	background-color: #40E0D0;
 				padding: 10px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-				z-index: 1000;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+			//	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			//	z-index: 1000;
+			//	display: flex;
+			//	justify-content: space-between;
+			//	align-items: center;
+				text-align: center;
 			}
 
-			#searchBoxContainer > div {
-				display: flex;
-				align-items: center;
-				flex-grow: 1; /* Permitir que los hijos crezcan */
-				margin-right: 10px; /* Espacio entre elementos */
+			//#searchBoxContainer > div {
+			//	display: flex;
+			//	align-items: center;
+			//	flex-grow: 1; /* Permitir que los hijos crezcan */
+			//	margin-right: 10px; /* Espacio entre elementos */
 
 			}
 
@@ -63,8 +64,11 @@
 				background-color: black;
 				border: none;
 				color: white;
-				flex-grow: 1; /* Permitir que el elemento crezca */
-				margin-right: 10px; /* Espacio entre elementos */
+			//	flex-grow: 1; /* Permitir que el elemento crezca */
+			//	margin-right: 10px; /* Espacio entre elementos */
+		            margin-bottom: 10px; /* Agrega espacio entre los cuadros de entrada */
+        		    box-sizing: border-box; /* Considera el relleno y el borde en el ancho total */
+
 			}
 
 			#submitBtn {
@@ -119,8 +123,13 @@
     <div id="header">
         <img src="https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/logo%20karaoke.jpg?raw=true" alt="Cabecera del sitio">
     </div>
-
-	<div id="searchBoxContainer">
+	
+    <div id="searchBoxContainer">
+        <input type="text" id="searchBox" placeholder="Buscar artista o canción">
+        <input type="text" id="nameInput" placeholder="Nombre">
+        <button id="submitBtn" disabled>Enviar</button>
+    </div>
+	/*<div id="searchBoxContainer">
 		<div>
 			<input type="text" id="searchBox" placeholder="Buscar artista o canción">
 		</div>
@@ -130,7 +139,7 @@
 		<div>
 			<button id="submitBtn" disabled>Enviar</button>
 		</div>
-	</div>
+	</div>*/
 	<ul id="namesList"></ul>
     <!-- Incluir Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
