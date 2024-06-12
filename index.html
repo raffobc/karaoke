@@ -7,22 +7,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-			
-			background-image: url('https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/33553.jpg?raw=true'); /* Reemplaza con la URL de tu imagen */
+ 		margin: 0; /* Asegura que no haya margen alrededor de la página */
+            padding-top: 100px; /* Deja espacio para la cabecera */	
+	background-image: url('https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/33553.jpg?raw=true'); /* Reemplaza con la URL de tu imagen */
             background-size: 100%; /* Ajusta la imagen para que cubra todo el fondo */
             background-position: top; /* Centra la imagen de fondo */
             background-repeat: no-repeat; /* Evita que la imagen se repita */
         }
 				
 			#header {
-				text-align: center;
-				margin-bottom: 20px;
+				position: fixed; /* Fija la cabecera */
+			            top: 0; /* La coloca en la parte superior */
+			            left: 0;
+			            width: 100%; /* Ocupa todo el ancho */
+			            background-color: #ffffff; /* Cambia el color de fondo */
+			            padding: 10px 20px; /* Añade espacio alrededor del contenido */
+			            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			            z-index: 1000; /* Asegura que esté encima de otros elementos */
 			}
 
 			#header img {
-				max-width: 100%;
-				height: auto;
+			            max-width: 200px; /* Ajusta el tamaño del logo */
+			            height: auto;
+			            display: block; /* Evita que el logo afecte al flujo del contenido */
+			            margin: 0 auto; /* Centra el logo horizontalmente */
 			}	
 			#searchBoxContainer {
 				position: fixed;
@@ -107,8 +115,8 @@
     </style>
 </head>
 <body>
-  <div id="header">
-        <img src="https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/logo%20karaoke.jpg?raw=true" alt="Cabecera del sitio"> <!-- Reemplaza con la URL de tu imagen -->
+    <div id="header">
+        <img src="https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/logo%20karaoke.jpg?raw=true" alt="Cabecera del sitio">
     </div>
 
 	<div id="searchBoxContainer">
