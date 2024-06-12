@@ -7,112 +7,108 @@
     <style>
         body {
             font-family: Arial, sans-serif;
- 		margin: 0; /* Asegura que no haya margen alrededor de la página */
-            padding-top: 40px; /* Deja espacio para la cabecera */	
-	// background-image: url('https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/33553.jpg?raw=true');  /* Reemplaza con la URL de tu imagen */
-        //    background-size: 100%; /* Ajusta la imagen para que cubra todo el fondo */
-	//  background-position: top; /* Centra la imagen de fondo */
-        //    background-repeat: no-repeat; /* Evita que la imagen se repita */
-	
+            margin: 0; /* Asegura que no haya margen alrededor de la página */
+            padding-top: 10px; /* Deja espacio para la cabecera */
+			background-color: red;
         }
-				
-			#header {
-				position: fixed; /* Fija la cabecera */
-			            top: 0; /* La coloca en la parte superior */
-			            left: 0;
-			            width: 100%; /* Ocupa todo el ancho */
-			            background-color: black; /* Cambia el color de fondo */
-			            padding: 10px 20px; /* Añade espacio alrededor del contenido */
-			            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			            z-index: 1000; /* Asegura que esté encima de otros elementos */
-				    text-align: center; /* Centra el contenido de la cabecera */
-			}
+        
+        header {
+            position: none; /* Fija la cabecera */
+            top: 0; /* La coloca en la parte superior */
+            left: 0;
+            width: 100%; /* Ocupa todo el ancho */
+            background-color: black; /* Cambia el color de fondo */
+            padding: 10px 20px; /* Añade espacio alrededor del contenido */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Asegura que esté encima de otros elementos */
+            text-align: center; /* Centra el contenido de la cabecera */
+        }
 
-			#header img {
-			            max-width: 50%; /* Ajusta el tamaño del logo */
-			            height: auto;
+        header img {
+            max-width: 70%; /* Ajusta el tamaño del logo */
+            height: auto;
+        }   
 
-			}	
-			#searchBoxContainer {
-				padding: 20px;
-	            		display: flex;
-	            		flex-direction: column; /* Alinea los elementos en columna */
-	            		align-items: center; /* Centra horizontalmente los elementos */
-				 margin-top: 40px; /* Espacio para evitar la superposición con la cabecera */
-			}
+        main {
+            padding: 10px;
+            display: flex;
+            flex-direction: column; /* Alinea los elementos en columna */
+            align-items: center; /* Centra horizontalmente los elementos */
+            margin-top: 20px; /* Espacio para evitar la superposición con la cabecera */
+        }
 
-			#searchBox, #nameInput {
-			    width: 100%;
-			    padding: 10px;
-			    font-size: 16px;
-			    background-color: black;
-			    border: none;
-			    color: white;
-			    margin-bottom: 10px;
-			    box-sizing: border-box;
+        #searchBox, #nameInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: black;
+            border: none;
+            color: white;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
 
-			}
+        #submitBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-shrink: 0; /* Evitar que el botón se reduzca */
+        }
 
-			#submitBtn {
-				padding: 10px 20px;
-				font-size: 16px;
-				background-color: #4CAF50;
-				color: white;
-				border: none;
-				border-radius: 4px;
-				cursor: pointer;
-	           		flex-shrink: 0; /* Evitar que el botón se reduzca */
+        #submitBtn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
 
-			}
+        #namesList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
 
-			#submitBtn:disabled {
-				background-color: #cccccc;
-				cursor: not-allowed;
-			}
+        #namesList li {
+            padding: 8px;
+            background: #f9f9f9;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
 
-			#namesList {
-				list-style-type: none;
-				padding: 0;
-				margin-top: 65px;
-			}
+        #namesList li.selected {
+            background-color: #ADD8E6;
+        }
 
-			#namesList li {
-				padding: 8px;
-				background: #f9f9f9;
-				margin-bottom: 5px;
-				border-radius: 4px;
-				display: flex;
-				justify-content: space-between;
-				cursor: pointer;
-			}
+        #namesList li.hidden {
+            display: none;
+        }
 
-			#namesList li.selected {
-				background-color: #ADD8E6;
-			}
-
-			#namesList li.hidden {
-				display: none;
-			}
-
-			#namesList li div {
-				width: 30%;
-			}
-
-
+        #namesList li div {
+            width: 45%;
+        }
     </style>
 </head>
 <body>
-    <div id="header">
+    <header>
         <img src="https://github.com/raffobc/karaoke/blob/cd8ebed9a43ee7c16038ead8686baae9994b9e63/logo%20karaoke.jpg?raw=true" alt="Cabecera del sitio">
-    </div>
-	
-    <div id="searchBoxContainer">
-        <input type="text" id="searchBox" placeholder="Buscar artista o canción">
-        <input type="text" id="nameInput" placeholder="Nombre">
-        <button id="submitBtn" disabled>Enviar</button>
-    </div>
-
-	<ul id="namesList"></ul>
+    </header>
+    
+    <main>
+        <div id="searchBoxContainer">
+            <input type="text" id="searchBox" placeholder="Buscar artista o canción">
+            <input type="text" id="nameInput" placeholder="Nombre">
+            <button id="submitBtn" disabled>Enviar</button>
+        </div>
+        <ul id="namesList"></ul>
+    </main>
+    
     <!-- Incluir Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -171,7 +167,6 @@
                                 surname: row[1],
                                 order: contador // Agregar el número de orden
                             };
-                            contador++; // Incrementar el contador
                             submitBtn.disabled = false; // Habilitar el botón de enviar
                         });
 
@@ -192,47 +187,31 @@
                 }
             });
 
-            /*submitBtn.addEventListener('click', function() {
-                if (selectedRow) {
-                    db.collection('songs').add(selectedRow)
+            submitBtn.addEventListener('click', function() {
+                const newName = nameInput.value.trim(); // Obtener el nombre del nuevo input
+                if (selectedRow !== null && newName !== '') {
+                    const selection = {
+                        name: newName,
+                        artist: selectedRow.name, // Campo para el nombre del artista
+                        song: selectedRow.surname, // Campo para el nombre de la canción
+                        order: contador // Agregar el número de orden
+                    };
+                    contador++; // Incrementar el contador
+
+                    db.collection('songs').add(selection)
                         .then(() => {
                             alert('Selección enviada correctamente');
                             submitBtn.disabled = true;
+                            nameInput.value = ''; // Limpiar el campo de nombre
                         })
                         .catch(error => {
                             console.error('Error al guardar la selección:', error);
                             alert('Error al enviar la selección');
                         });
+                } else {
+                    alert('Por favor ingrese un nombre antes de enviar la selección.');
                 }
-            });*/
-			submitBtn.addEventListener('click', function() {
-				const newName = nameInput.value.trim(); // Obtener el nombre del nuevo input
-				if (selectedRow !== null && newName !== '') {
-					const selection = {
-						name: newName,
-						artist: selectedRow.name, // Campo para el nombre del artista
-						song: selectedRow.surname, // Campo para el nombre de la canción
-						order: contador // Agregar el número de orden
-					};
-					//contador++; // Incrementar el contador
-
-					db.collection('songs').add(selection)
-						.then(() => {
-							alert('Selección enviada correctamente');
-							submitBtn.disabled = true;
-						})
-						.catch(error => {
-							console.error('Error al guardar la selección:', error);
-							alert('Error al enviar la selección');
-						});
-				} else {
-					alert('Por favor ingrese un nombre antes de enviar la selección.');
-				}
-			});
-
-
-			
-			
+            });
         });
     </script>
 </body>
