@@ -137,8 +137,7 @@
             const range = 'A2:B10000'; // Rango donde están los datos
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
             let selectedRow = null;
-            let contador = 1; // Inicializar contador
-
+            
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
